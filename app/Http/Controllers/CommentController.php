@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
+use App\User;
+use Auth;
+
 
 class CommentController extends Controller
 {
@@ -11,9 +15,15 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $comment;
+    public function __construct(Comment $comment)
+    {
+        $this->comment = $comment;
+    }
     public function index()
     {
         //
+        $comments = $this->comment->all();
     }
 
     /**
@@ -35,6 +45,20 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+        if(isset(Auth::user()->id))
+        {
+        $input = $request->except('_token');
+        $input['user_id'] = Auth::user()->id;
+        $comment = new $this->comment;
+        $comment->fill($input);
+        $comment->save();
+        return redirect()->back();
+        }
+        else{
+            return redirect()->back()->with('message', 'Please Login');
+        }
+        
+        
     }
 
     /**

@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
 <div class="panel panel-default">
-<div class="panel-heading">Create thread</div>
+<div class="panel-heading">Edit thread</div>
         <div class="panel-body">
-        {!! Form::open(['route' => 'thread.store', 'method' => 'post']) !!}
+        {!! Form::model($thread ,['route' => ['thread.update', $thread->id], 'method' => 'PUT']) !!}
             @include('form')
         {!! Form::close() !!}
         </div>

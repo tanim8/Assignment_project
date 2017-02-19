@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Thread;
-
+use App\User;
+use Auth;
 class ThreadController extends Controller
-{
+{   
+    protected $thread;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(Thread $thread)
+    {
+        $this->thread = $thread;
+    }
     public function index()
     {
         //
-        $thread['threads'] = Thread::all();
+        $thread['threads'] = $this->thread->all();
         return view('threadlist', $thread);
     }
 
@@ -27,7 +33,16 @@ class ThreadController extends Controller
     public function create()
     {
         //
-        return view('create_thread');
+        if(isset(Auth::user()->id))
+        {
+            return view('create_thread');    
+        }
+        else
+        {
+            $message = 'please login or registration';
+            return redirect()->route('thread.index')->with('message', 'Please Login or registration');
+        }
+        
     }
 
     /**
@@ -39,6 +54,13 @@ class ThreadController extends Controller
     public function store(Request $request)
     {
         //
+        $input = $request->except('_token');
+        $input['user_id'] = Auth::user()->id;
+        $thread = new $this->thread;
+        $thread1 = $thread->fill($input);
+        $thread->save();
+        return redirect()->route('thread.index');
+        
     }
 
     /**
@@ -50,6 +72,8 @@ class ThreadController extends Controller
     public function show($id)
     {
         //
+        $thread = $this->thread->with('comments')->find($id);
+        return view('show')->with(compact('thread'));
     }
 
     /**
@@ -61,6 +85,9 @@ class ThreadController extends Controller
     public function edit($id)
     {
         //
+        $thread = $this->thread->find($id);
+
+        return view('edit')->with(compact('thread'));
     }
 
     /**
@@ -73,6 +100,10 @@ class ThreadController extends Controller
     public function update(Request $request, $id)
     {
         //
+       $thread = $this->thread->find($id);
+       $input = $request->except('_token');
+       $thread->update($input);
+       return redirect()->route('thread.index');
     }
 
     /**
@@ -84,5 +115,7 @@ class ThreadController extends Controller
     public function destroy($id)
     {
         //
+        $this->thread->destroy($id);
+        return;
     }
 }
