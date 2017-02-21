@@ -10,6 +10,9 @@
         {!! Form::model($thread ,['route' => ['thread.update', $thread->id], 'method' => 'PUT']) !!}
             @include('form')
         {!! Form::close() !!}
+        {{ Form::open(['method' => 'DELETE', 'route' => ['thread.destroy', $thread->id]]) }}
+    	{{ Form::submit('Delete', ['class' => 'btn  btn-xs btn-danger pull-right']) }}
+		{{ Form::close() }}
         </div>
 </div>
     </div>

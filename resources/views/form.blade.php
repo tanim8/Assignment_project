@@ -18,4 +18,4 @@
 {{ Form::label('contributor_name', 'contributor_name', ['class'=> 'control-label'])}}
 {{ Form::text('contributor_name', old('contributor_name'), ['class' => 'form-control', 'placeholder' => 'contributor_name']) }}
 </div> 
-<button class="btn btn-lg btn-primary">Submit</button> 
+<button class="btn btn-xs btn-primary" style="margin:4px 0px;">Submit</button> 

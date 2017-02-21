@@ -16,5 +16,6 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/search', 'ThreadController@search')->name('search');
 Route::resource('thread', 'ThreadController');
 Route::resource('comment', 'CommentController');

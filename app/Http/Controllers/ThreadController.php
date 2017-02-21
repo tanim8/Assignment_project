@@ -115,7 +115,14 @@ class ThreadController extends Controller
     public function destroy($id)
     {
         //
+        
         $this->thread->destroy($id);
-        return;
+        return redirect()->route('thread.index');
+    }
+    public function search(Request $request)
+    {
+       $search = $request->search;
+       $thread['threads'] = $this->thread->where('title', 'like', '%'.$search.'%')->get();
+        return view('threadlist', $thread);
     }
 }

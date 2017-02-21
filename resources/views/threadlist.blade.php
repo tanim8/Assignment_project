@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -13,8 +14,22 @@
                     </ul>
                     </div>
                     @endif
+            <div class="col-md-4" style="margin: 2px 0px;">
+                <form action="{{ route('search') }}" method="get">
+                    <div id="imaginary_container"> 
+                <div class="input-group stylish-input-group">
+                    <input type="text" name="search" class="form-control"  placeholder="Search" >
+                    <span class="input-group-addon" style="padding: 0px 12px;">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>  
+                    </span>
+                </div>
+            </div
+                </form>
+            </div>
                 <div class="panel-body">   
-                  <a href="{{ route('thread.create') }}" class="btn btn-info btn-xs pull-right">New Thread</a> 
+                  <a href="{{ route('thread.create') }}" class="btn btn-info btn-xs pull-right" style="margin:5px 0px;">New Thread</a> 
                 <table id="data-table" class="table table-bordered table-striped" style="font-size: 12px;">
                     <thead>
                         <tr>
